@@ -48,3 +48,9 @@ my.cnf
 
 # Local data
 db_backups/
+
+# Terraform
+.terraform*
+app_access_key.json
+passwords.json
+*.tfstate
