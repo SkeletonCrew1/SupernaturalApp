@@ -1,0 +1,121 @@
+html,
+body,
+#root {
+    background: linear-gradient(145deg, #0b0f19 0%, #111827 100%);
+}
+
+.for-title {
+    min-width: 4%;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.create-form {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid rgb(255 255 255 / 8%);
+    background: rgb(17 24 39 / 60%);
+    padding: 30px;
+    margin: 20px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+.form-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 70%;
+}
+
+.form-group label {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgb(255 255 255 / 4%);
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 20px;
+    padding: 14px 18px;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.form-group select option {
+    background-color: #111827;
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 20px;
+    color: #ffffff;
+    padding: 10px;
+}
+
+#id_description {
+    min-height: 80px;
+}
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-main {
+    width: 70%;
+    background: #8b5cf6;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-main:hover {
+    background-color:#7148d2e1;
+    transform: translateY(-1px);
+}
+
+.btn-main:active {
+    transform: translateY(0);
+}
+
+.error-message{
+    background-color: #6b161639;
+    border: 1px solid rgba(184, 17, 17, 0.637);
+    border-radius: 20px;
+    padding: 3px 15px;
+}

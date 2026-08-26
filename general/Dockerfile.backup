@@ -1,0 +1,5 @@
+FROM alpine:3.24
+RUN apk add --no-cache postgresql18-client dcron bash
+COPY backup.sh /usr/local/bin/backup.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /usr/local/bin/backup.sh /entrypoint.sh

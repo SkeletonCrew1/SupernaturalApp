@@ -1,0 +1,25 @@
+.ui-logout-btn {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 4%);
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ui-logout-btn:hover {
+  background: rgb(239 68 68 / 15%);
+  border-color: rgb(239 68 68 / 40%);
+  color: #f87171;
+  transform: translateY(-1px);
+}
+
+.ui-logout-btn:active {
+  transform: translateY(0);
+}

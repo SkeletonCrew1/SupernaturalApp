@@ -1,0 +1,106 @@
+global:
+  name: consul
+  datacenter: dc1
+  # Enable gossip encryption
+  gossipEncryption:
+    secretName: consul-gossip-encryption-key
+    secretKey: key
+  # Enable TLS
+  tls:
+    enabled: true
+    enableAutoEncrypt: true
+    verify: true
+  # Enable ACLs
+  acls:
+    manageSystemACLs: true
+  # Enable metrics
+  metrics:
+    enabled: true
+    enableAgentMetrics: true
+    enableGatewayMetrics: true
+
+server:
+  replicas: 3
+  bootstrapExpect: 3
+  storage: 10Gi
+  storageClass: auto-ebs-sc
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  # Anti-affinity for HA
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: {{ template "consul.name" . }}
+              release: "{{ .Release.Name }}"
+              component: server
+          topologyKey: kubernetes.io/hostname
+
+client:
+  enabled: true
+  grpc: true
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "250m"
+
+# Enable Connect service mesh
+connectInject:
+  enabled: true
+  default: false  # Opt-in for injection
+  resources:
+    requests:
+      memory: "50Mi"
+      cpu: "50m"
+    limits:
+      memory: "150Mi"
+      cpu: "100m"
+
+  # Configures and installs the Consul API Gateway.
+  apiGateway:
+    enabled: true
+  # Configuration settings for the GatewayClass
+    manageExternalCRDs: false
+    managedGatewayClass:
+      # Defines the type of service created for gateways (e.g. LoadBalancer, ClusterIP, NodePort)
+      # LoadBalancer is primarily used for cloud deployments.
+      serviceType: LoadBalancer
+      copyAnnotations:
+        service:
+          annotations: |
+            - service.beta.kubernetes.io/aws-load-balancer-type
+            - service.beta.kubernetes.io/aws-load-balancer-scheme
+            - service.beta.kubernetes.io/aws-load-balancer-nlb-target-type
+
+controller:
+  enabled: true
+
+# Enable sync from Kubernetes to Consul
+syncCatalog:
+  enabled: true
+  toConsul: true
+  toK8S: false
+  k8sPrefix: ""
+  consulPrefix: ""
+  # Only sync services with annotation
+  k8sAllowNamespaces: ["*"]
+  k8sDenyNamespaces: ["kube-system", "kube-public"]
+
+# Enable Consul UI
+ui:
+  enabled: true
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - host: consul.example.com

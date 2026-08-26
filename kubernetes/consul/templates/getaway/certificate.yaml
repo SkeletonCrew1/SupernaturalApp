@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: supernatural-tls
+  namespace: consul
+spec:
+  secretName: supernatural-tls
+  issuerRef:
+    name: letsencrypt-supernatural
+    kind: ClusterIssuer
+  dnsNames:
+    - "www.supernatural.pp.ua"

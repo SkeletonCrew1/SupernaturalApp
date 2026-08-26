@@ -1,0 +1,25 @@
+.ui-erase-btn {
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: #880f0f;
+  border: none;
+  border-radius: 10px;
+  padding: 6px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ui-erase-btn:hover {
+  background: rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.4);
+  color: #ff0000;
+  transform: translateY(-1px);
+}
+
+.ui-erase-btn:active {
+  transform: translateY(0);
+}

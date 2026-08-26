@@ -1,0 +1,50 @@
+# OS files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+JustFile
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+venv/
+.venv/
+env/
+.Python
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node.js
+node_modules/
+dist/
+.vite/
+
+# Terraform
+terraform/iac/.terraform/
+terraform/iac/.terraform.lock.hcl
+terraform/iac/terraform.tfstate
+terraform/iac/terraform.tfstate.backup
+terraform/iac/terraform.tfvars
+
+terraform/state_bucket/.terraform/
+terraform/state_bucket/.terraform.lock.hcl
+terraform/state_bucket/terraform.tfstate
+terraform/state_bucket/terraform.tfstate.backup
+terraform/state_bucket/terraform.tfvars
+
+# Local configuration
+my.cnf
+
+# Local data
+db_backups/

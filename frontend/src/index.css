@@ -1,0 +1,25 @@
+@font-face {
+  font-family: SupernaturalFont;
+  src: url('./assets/fonts/Nunito-VariableFont_wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(145deg, #0b0f19 0%, #111827 100%);
+  font-family: SupernaturalFont, sans-serif;
+  color: #9ca3af;
+  overflow: hidden;
+}
+
+@media (width <= 768px) {
+  html, body, #root {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+}

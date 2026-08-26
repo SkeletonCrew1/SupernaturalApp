@@ -1,0 +1,143 @@
+#default values
+global:
+  env: dev
+services:
+  cleanup:
+    #specifying if service should have HorizontalAutoScaling and Service
+    hasHorizontalAutoScaling: true
+    hasService: true
+    hasSecret: true
+    hasDeployment: true
+    hasCron: false
+
+    # deployment vars
+    name: cleanup
+    isPartOfConsul: true
+    serviceAccountName: cleanup #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/cleanup:test_cleanup_v.310
+    containerPort: 8585 #used for container port and liveness port
+    getCheck: true
+    #horizontal_auto_scaling vars
+    #name-secret used here
+    DSN: '{EXAMPLE}'
+
+
+  auth:
+    hasHorizontalAutoScaling: true
+    hasService: true
+    hasSecret: true
+    hasDeployment: true
+    hasCron: false
+    # deployment vars
+
+    name: auth
+    isPartOfConsul: true
+
+    serviceAccountName: auth #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/auth:test_auth_v.310
+    containerPort: 8080 #used for container port and liveness port
+    getCheck: true
+
+    #horizontal_auto_scaling vars
+    #name-deployment as a var used here
+
+    #secret vars
+    #name-secret used here
+    DSN: '{EXAMPLE}'
+    JWT_KEY: '{EXAMPLE}'
+    # service_account vars
+    #serviceAccountName used here for mail = mail-service
+
+    #service vars
+    #container-port used here x2
+    #app-label used here
+
+  mail:
+      #specifying if service should have HorizontalAutoScaling and Service
+    hasHorizontalAutoScaling: true
+    hasService: true
+    hasSecret: true
+    hasDeployment: true
+    hasCron: false
+
+    # deployment vars
+    name: mail
+    isPartOfConsul: true
+    serviceAccountName: mail-service #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/mail_sending:test_mail_sending_v.310
+    containerPort: 8074 #used for container port and liveness port
+    getCheck: true
+    #horizontal_auto_scaling vars
+    #secret vars
+    #name-secret used here
+    DSN: '{EXAMPLE}'
+    EMAIL_FROM: '{EXAMPLE}'
+    EMAIL_HOST: 'smtp.gmail.com'
+    EMAIL_PASSWORD: '{EXAMPLE}'
+    EMAIL_PORT: '587'
+    #service vars
+
+  frontend:
+    #specifying if service should have HorizontalAutoScaling and Service
+    hasHorizontalAutoScaling: true
+    hasService: true
+    hasSecret: false
+    hasDeployment: true
+    hasCron: false
+    # deployment vars
+    name: frontend
+    isPartOfConsul: true
+    serviceAccountName: frontend #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/frontend:test_frontend_v.306
+    containerPort: 8080 #used for container port and liveness port
+    getCheck: true
+    #horizontal_auto_scaling vars
+    #secret vars
+    #service vars
+
+  general:
+    #specifying if service should have HorizontalAutoScaling and Service
+    hasHorizontalAutoScaling: true
+    hasService: true
+    hasSecret: true
+    hasDeployment: true
+    hasCron: false
+
+    # deployment vars
+    name: general
+    isPartOfConsul: true
+    serviceAccountName: general #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/general:test_general_v.322
+    containerPort: 4040 #used for container port and liveness port
+    getCheck: true
+    #horizontal_auto_scaling vars
+    #secret vars
+    #name-secret used here
+    DB_NAME: '{EXAMPLE}'
+    DB_USER: '{EXAMPLE}'
+    DB_PASS: '{EXAMPLE}'
+    DB_HOST: '{EXAMPLE}'
+    JWT_KEY: '{EXAMPLE}'
+    SECRET_KEY: '{EXAMPLE}'
+    AWS_REGION: '{EXAMPLE}'
+    AWS_STORAGE_BUCKET_NAME: '{EXAMPLE}'
+    #service vars
+
+  password_generator:
+     #specifying if service should have HorizontalAutoScaling and Service
+    hasHorizontalAutoScaling: false
+    hasService: true
+    hasSecret: true
+    hasDeployment: false
+    hasCron: true
+
+    # deployment vars
+    name: password-generator
+    isPartOfConsul: true
+    serviceAccountName: password-protection #for mail it's mail-service
+    image: 704427427594.dkr.ecr.us-east-1.amazonaws.com/password_generator:test_password_generator_v.315
+    schedule: "0 0 * * *"
+    containerPort: 9999
+    #secret vars
+    #name-secret used here
+    DSN: '{EXAMPLE}'

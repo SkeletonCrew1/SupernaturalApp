@@ -1,0 +1,27 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: mail-service
+  namespace: app
+spec:
+  protocol: http
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: mail-intentions
+  namespace: app
+spec:
+  destination:
+    name: mail-service
+  sources:
+    - name: api-gateway
+      action: allow
+    - name: frontend
+      action: allow
+    - name: password-protection
+      action: allow
+    - name: auth
+      action: allow
+    - name: "*"
+      action: deny

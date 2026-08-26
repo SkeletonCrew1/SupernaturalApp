@@ -1,0 +1,52 @@
+{{- range .Values.services  }}
+{{- if .hasCron }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .name }}-cronjob
+  namespace: app
+spec:
+  schedule: {{ .schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .name }}
+          {{- if .isPartOfConsul }}
+          annotations:
+            consul.hashicorp.com/connect-inject: 'true'
+            consul.hashicorp.com/connect-service: '{{ .serviceAccountName }}'
+            consul.hashicorp.com/transparent-proxy-exclude-outbound-ports: "5432"
+            consul.hashicorp.com/sidecar-proxy-lifecycle-shutdown-grace-period-seconds: "5"
+          {{- end }}
+        spec:
+          serviceAccountName: {{ .serviceAccountName }}
+          restartPolicy: OnFailure
+          containers:
+            - name: {{ .name }}
+              image: {{ .image }}
+              {{- if eq .name "password-generator" }}
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  /password_generator/main
+                  EXIT_CODE=$?
+                  wget -q -T 2 --post-data='' -O /dev/null http://127.0.0.1:20600/graceful_shutdown
+                  sleep 10
+                  echo "Sidecar killed"
+                  exit $EXIT_CODE
+              {{- end }}
+              envFrom:
+                - secretRef:
+                    name: {{ .name }}-secret
+              resources:
+                requests:
+                  cpu: "150m"
+                  memory: "256Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "512Mi"
+{{- end }}
+{{- end }}

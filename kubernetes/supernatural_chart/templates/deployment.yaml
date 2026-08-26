@@ -1,0 +1,71 @@
+{{- range .Values.services  }}
+{{- if .hasDeployment }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-deployment
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+      env: {{ $.Values.global.env }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+        env: {{ $.Values.global.env }}
+      {{- if .isPartOfConsul }}
+      annotations:
+        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/connect-service: '{{ .serviceAccountName }}'
+        {{- if ne .name "frontend" }}
+        consul.hashicorp.com/transparent-proxy-exclude-outbound-ports: "5432"
+        {{- end }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ .serviceAccountName }}
+      containers:
+        - name: {{ .name }}
+          image: {{ .image }}
+          {{- if ne .name "password-generator" }}
+          ports:
+            - containerPort: {{ .containerPort }}
+          {{- end }}
+          {{- if eq .name "general" }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          {{- end }}
+          {{- if ne .name "frontend" }}
+          envFrom:
+            - secretRef:
+                name: {{ .name }}-secret
+          {{- end }}
+          resources:
+            requests:
+             cpu: "150m"
+             memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          {{- if .getCheck }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .containerPort }}
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+             path: /health
+             port: {{ .containerPort }}
+            initialDelaySeconds: 60
+            periodSeconds: 15
+          {{- end }}
+{{- end }}
+{{- end }}
