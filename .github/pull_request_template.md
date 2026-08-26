@@ -12,8 +12,6 @@ What kind of changes does this PR introduce?
 
 ## Description
 Describe the purpose of this pull request.
-## Why do we need this change?
-Describe the reason of changes
 ## Tests
 How did you test these changes, and what was the result?
 
