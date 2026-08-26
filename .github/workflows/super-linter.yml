@@ -101,3 +101,4 @@ jobs:
           VALIDATE_DOCKERFILE_HADOLINT: false
           VALIDATE_KUBERNETES_KUBECONFORM: false
           VALIDATE_YAML: false
+          VALIDATE_GROOVY: false

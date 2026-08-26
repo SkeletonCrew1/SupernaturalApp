@@ -8,7 +8,7 @@ resource "aws_iam_user" "masonicapp" {
 }
 
 resource "aws_iam_user_policy_attachment" "masonicapp" {
-  user = aws_iam_user.masonicapp.id
+  user       = aws_iam_user.masonicapp.id
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 

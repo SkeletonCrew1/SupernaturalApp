@@ -9,7 +9,7 @@ output "user_passwords" {
 
 output "app_access_key" {
   value = {
-    id = aws_iam_access_key.masonicapp.id
+    id     = aws_iam_access_key.masonicapp.id
     secret = aws_iam_access_key.masonicapp.secret
   }
   sensitive = true

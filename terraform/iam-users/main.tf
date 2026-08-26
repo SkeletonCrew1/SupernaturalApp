@@ -31,7 +31,7 @@ resource "aws_iam_group" "shell-policy-group" {
 
 resource "aws_iam_user_group_membership" "shell-policy-group-attachment" {
   for_each = toset(local.users)
-  user = aws_iam_user.users[each.value].name
+  user     = aws_iam_user.users[each.value].name
 
   groups = [
     aws_iam_group.shell-policy-group.name,

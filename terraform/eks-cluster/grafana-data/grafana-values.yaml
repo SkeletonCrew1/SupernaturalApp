@@ -822,7 +822,7 @@ alerting:
             singleEmail: false
           disableResolveMessage: false
 
-  
+
   # templates.yaml:
   #   apiVersion: 1
   #   templates:
@@ -1513,7 +1513,7 @@ namespaceOverride: ""
 ##
 revisionHistoryLimit: 10
 
-## Add a seperate remote image renderer deployment/service
+## Add a separate remote image renderer deployment/service
 imageRenderer:
   deploymentStrategy: {}
   # Enable the image-renderer deployment & service
@@ -1773,4 +1773,3 @@ extraObjects: []
 # Alternatively, if you wish to allow secret values to be exposed in the rendered grafana.ini configmap,
 # you can disable this check by setting assertNoLeakedSecrets to false.
 assertNoLeakedSecrets: true
-
