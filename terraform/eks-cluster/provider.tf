@@ -4,6 +4,15 @@ provider "aws" {
 
 terraform {
   required_providers {
+    terraform = {
+      version = "1.15.9"
+    }
+
+    tls = {
+      source = "hashicorp/tls"
+      version = ">=4.3.0"
+    }
+
     aws = {
       source  = "hashicorp/aws"
       version = ">= 6.57.0"
@@ -30,10 +39,6 @@ terraform {
 }
 
 data "aws_eks_cluster" "eks" {
-  name = aws_eks_cluster.eks.name
-}
-
-data "aws_eks_cluster_auth" "eks-auth" {
   name = aws_eks_cluster.eks.name
 }
 
