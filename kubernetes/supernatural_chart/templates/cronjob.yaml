@@ -37,10 +37,17 @@ spec:
                   sleep 10
                   echo "Sidecar killed"
                   exit $EXIT_CODE
+              env:
+                - name: DSN
+                  valueFrom:
+                   secretKeyRef:
+                     name: app-aws-secrets-map
+                     key: DSN
               {{- end }}
-              envFrom:
-                - secretRef:
-                    name: {{ .name }}-secret
+              volumeMounts:
+              - name: secrets-volume
+                mountPath: "/mnt/secrets"
+                readOnly: true
               resources:
                 requests:
                   cpu: "150m"
@@ -48,5 +55,12 @@ spec:
                 limits:
                   cpu: "500m"
                   memory: "512Mi"
+          volumes:
+            - name: secrets-volume
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: "aws-secrets-all"
 {{- end }}
 {{- end }}
