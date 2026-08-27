@@ -16,7 +16,7 @@ resource "aws_secretsmanager_secret_version" "rds_secrets" {
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "${var.identifier}-${local.env}-subnet-group"
+  name = "${var.identifier}-${local.env}-subnet-group"
   subnet_ids = [
     aws_subnet.private_zone1.id,
     aws_subnet.private_zone2.id
@@ -54,7 +54,7 @@ resource "aws_db_instance" "rds_postgres" {
 
   parameter_group_name = aws_db_parameter_group.rds_postgres_group.name
 
-  skip_final_snapshot  = true
+  skip_final_snapshot = true
 
-  db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
+  db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
 }
