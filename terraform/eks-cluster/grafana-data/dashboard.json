@@ -2,10 +2,10 @@
   "apiVersion": "dashboard.grafana.app/v2",
   "kind": "Dashboard",
   "metadata": {
-    "name": "cluster-info",
     "annotations": {
       "grafana.app/folder": ""
-    }
+    },
+    "name": "cluster-info"
   },
   "spec": {
     "annotations": [

@@ -62,4 +62,4 @@ variable "ecr_services" {
     "mail_sending",
     "password_generator"
   ]
-} 
+}

@@ -18,7 +18,7 @@ resource "aws_secretsmanager_secret_version" "rds_secrets" {
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${var.identifier}-${local.env}-subnet-group"
   subnet_ids = [
-    aws_subnet.private_zone1.id, 
+    aws_subnet.private_zone1.id,
     aws_subnet.private_zone2.id
   ]
 }
@@ -32,7 +32,7 @@ resource "aws_db_parameter_group" "rds_postgres_group" {
     name  = "log_statement"
     value = "all"
   }
-  
+
   lifecycle {
     create_before_destroy = true
   }
@@ -42,7 +42,7 @@ resource "aws_db_instance" "rds_postgres" {
   identifier     = "${var.identifier}-${local.env}"
   engine         = var.engine
   engine_version = var.engine_version
-  
+
   instance_class      = var.instance_type
   allocated_storage   = var.allocated_storage
   storage_type        = var.storage_type
@@ -53,7 +53,7 @@ resource "aws_db_instance" "rds_postgres" {
   password = var.rds_password
 
   parameter_group_name = aws_db_parameter_group.rds_postgres_group.name
-  
+
   skip_final_snapshot  = true
 
   db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
