@@ -31,6 +31,20 @@ spec:
                 - /bin/sh
                 - -c
                 - |
+                  echo "Waiting for mail-service to be reachable..."
+                  ATTEMPTS=0
+                  MAX_ATTEMPTS=15
+                  until wget -q -T 2 -O /dev/null http://mail-service:8074/health; do
+                    ATTEMPTS=$((ATTEMPTS+1))
+                    if [ "$ATTEMPTS" -ge "$MAX_ATTEMPTS" ]; then
+                      echo "mail-service did not become reachable in time, exiting"
+                      exit 1
+                    fi
+                    echo "mail-service not ready yet, retrying in 2s (attempt $ATTEMPTS/$MAX_ATTEMPTS)..."
+                    sleep 2
+                  done
+                  echo "mail-service is reachable, proceeding"
+
                   /password_generator/main
                   EXIT_CODE=$?
                   wget -q -T 2 --post-data='' -O /dev/null http://127.0.0.1:20600/graceful_shutdown
