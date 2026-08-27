@@ -43,11 +43,11 @@ spec:
                    secretKeyRef:
                      name: app-aws-secrets-map
                      key: DSN
-              {{- end }}
               volumeMounts:
               - name: secrets-volume
                 mountPath: "/mnt/secrets"
                 readOnly: true
+              {{- end }}
               resources:
                 requests:
                   cpu: "150m"
@@ -55,6 +55,7 @@ spec:
                 limits:
                   cpu: "500m"
                   memory: "512Mi"
+          {{- if eq .name "password-generator" }}
           volumes:
             - name: secrets-volume
               csi:
@@ -62,5 +63,6 @@ spec:
                 readOnly: true
                 volumeAttributes:
                   secretProviderClass: "aws-secrets-all"
+          {{- end }}
 {{- end }}
 {{- end }}
