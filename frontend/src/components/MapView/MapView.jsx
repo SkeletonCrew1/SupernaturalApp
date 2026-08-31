@@ -44,6 +44,28 @@ export default function MapView({ onMapClick, posts = [], onMarkerClick, user })
           </Marker>
         ))}
       </MapContainer>
+      <button
+        type="button"
+        className="map-view__chat-btn"
+        onClick={() => window.location.href = '/chat'}
+        aria-label="Open AI assistant"
+        title="AI Assistant"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          width="22"
+          height="22"
+          aria-hidden="true"
+        >
+          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+          <path d="M8 10h.01M12 10h.01M16 10h.01" />
+        </svg>
+        <span>Ai Assistant</span>
+      </button>
       <button type="button" className="map-view__votes-btn" onClick={() => window.location.href = '/votes'} aria-label="voting court">
         <svg
           xmlns="http://www.w3.org/2000/svg"
