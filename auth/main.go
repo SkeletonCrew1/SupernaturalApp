@@ -34,6 +34,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Create second user
+	err = createSecondMason()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Close database connection when main exits
 	defer db.Close()
@@ -305,6 +310,20 @@ func createFirstMason() error {
 		"First Mason",
 		"commandlline@gmail.com",
 		"$2a$10$9Owy5mvK.YLoXmypAOd6deW.Nm1e98oOqiyC/4xJWJIgnUV76pYXW",
+		"gold",
+		false,
+		true,
+		false,
+	)
+
+	return err
+}
+func createSecondMason() error {
+	_, err := db.Exec(
+		"INSERT INTO users (alias, email, password, status, inquisitor, is_architect, banned) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (email) DO NOTHING",
+		"Golden Mason",
+		"bholovchak98@gmail.com",
+		"$2a$10$Fe/Zn4fkITbfUyrSO8QW5.1nto6uGsb5FQ6buAeb8DJADwGc5tHD6",
 		"gold",
 		false,
 		true,
