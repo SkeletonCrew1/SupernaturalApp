@@ -108,7 +108,9 @@ export default function Admin({ user, setUser }) {
           > down </button>
         </div>
 
-        <EraseButton onClick={handleEraseClick} style={{ display: user?.status === "gold" ? "flex" : "none" }} />
+        {user?.status === "gold" && (
+        <EraseButton onClick={handleEraseClick} />
+        )}
         {eraseMessage && <p>{eraseMessage}</p>}
       </div>
 

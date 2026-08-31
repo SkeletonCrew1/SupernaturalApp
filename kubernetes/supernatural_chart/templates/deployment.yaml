@@ -34,17 +34,83 @@ spec:
           ports:
             - containerPort: {{ .containerPort }}
           {{- end }}
-          {{- if eq .name "general" }}
+          {{- if ne .name "frontend" }}
           env:
+          {{- if eq .name "general" }}
             - name: POD_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
           {{- end }}
-          {{- if ne .name "frontend" }}
-          envFrom:
-            - secretRef:
-                name: {{ .name }}-secret
+            - name: DSN
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: DSN
+            - name: EMAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: EMAIL_FROM
+            - name: EMAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: EMAIL_PORT
+            - name: EMAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: EMAIL_HOST
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: EMAIL_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: DB_PASS
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: DB_HOST
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: JWT_KEY
+            - name: AWS_STORAGE_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: AWS_STORAGE_BUCKET_NAME
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: AWS_REGION
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: SECRET_KEY
+          volumeMounts:
+          - name: secrets-volume
+            mountPath: "/mnt/secrets"
+            readOnly: true
           {{- end }}
           resources:
             requests:
@@ -67,5 +133,14 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 15
           {{- end }}
+      {{- if ne .name "frontend" }}
+      volumes:
+        - name: secrets-volume
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "aws-secrets-all"
+      {{- end }}
 {{- end }}
 {{- end }}
