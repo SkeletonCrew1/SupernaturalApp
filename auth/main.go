@@ -116,7 +116,7 @@ func setTrespassingCookie(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	register_url := fmt.Sprintf("http://127.0.0.1:8080/register/%s", token)
+	register_url := fmt.Sprintf("http://www.supernatural.com/register/%s", token)
 	http.Redirect(w, r, register_url, http.StatusSeeOther)
 }
 
