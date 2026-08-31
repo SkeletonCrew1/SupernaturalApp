@@ -1,5 +1,7 @@
 from typing import Annotated, Literal
 
+# pylint: disable=too-few-public-methods
+
 from asgiref.sync import sync_to_async
 from django.core.exceptions import PermissionDenied
 from fastmcp import Context, FastMCP

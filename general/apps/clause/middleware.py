@@ -1,6 +1,8 @@
 import os
 from http.cookies import SimpleCookie
 
+# pylint: disable=too-few-public-methods
+
 import jwt as pyjwt
 from fastmcp.exceptions import ToolError
 from fastmcp.server.dependencies import get_http_headers

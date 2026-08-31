@@ -1,5 +1,7 @@
 """Tools for ai agent"""
 
+# pylint: disable=too-few-public-methods
+
 import ipaddress
 
 import requests

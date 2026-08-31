@@ -1,5 +1,7 @@
 """URLS for clause ai agent"""
 
+# pylint: disable=too-few-public-methods
+
 from django.urls import path
 from .tools import mcp
 from .views import ai_chat_endpoint
