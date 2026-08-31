@@ -1,18 +1,3 @@
-variable "rds_name" {
-  description = "Name of the rds"
-  type        = string
-}
-
-variable "rds_user" {
-  description = "Database user"
-  type        = string
-}
-
-variable "rds_password" {
-  description = "Database password"
-  type        = string
-  sensitive   = true
-}
 variable "storage_type" {
   description = "Database user"
   type        = string
@@ -27,7 +12,7 @@ variable "allocated_storage" {
 variable "identifier" {
   description = "Unique name of db in aws"
   type        = string
-  default     = "microservice-db"
+  default     = "supernaturaldb"
 }
 
 variable "engine" {

@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "rds_secrets" {
-  name                    = "microservice/rds_credential_${local.env}"
+  name                    = "supernatural/rds_credential_${local.env}"
   recovery_window_in_days = 0
   lifecycle {
     create_before_destroy = true
@@ -9,9 +9,15 @@ resource "aws_secretsmanager_secret" "rds_secrets" {
 resource "aws_secretsmanager_secret_version" "rds_secrets" {
   secret_id = aws_secretsmanager_secret.rds_secrets.id
   secret_string = jsonencode({
-    db_name  = var.rds_name
-    username = var.rds_user
-    password = var.rds_password
+    db_name = jsondecode(
+      data.aws_secretsmanager_secret_version.DB_NAME.secret_string
+    )["DB_NAME"]
+    username = jsondecode(
+      data.aws_secretsmanager_secret_version.DB_USER.secret_string
+    )["DB_USER"]
+    password = jsondecode(
+      data.aws_secretsmanager_secret_version.DB_PASS.secret_string
+    )["DB_PASS"]
   })
 }
 
@@ -48,13 +54,22 @@ resource "aws_db_instance" "rds_postgres" {
   storage_type        = var.storage_type
   publicly_accessible = var.publicly_accessible
 
-  db_name  = var.rds_name
-  username = var.rds_user
-  password = var.rds_password
+  db_name = jsondecode(
+    data.aws_secretsmanager_secret_version.DB_NAME.secret_string
+  )["DB_NAME"]
+  username = jsondecode(
+    data.aws_secretsmanager_secret_version.DB_USER.secret_string
+  )["DB_USER"]
+  password = jsondecode(
+    data.aws_secretsmanager_secret_version.DB_PASS.secret_string
+  )["DB_PASS"]
 
   parameter_group_name = aws_db_parameter_group.rds_postgres_group.name
 
   skip_final_snapshot = true
 
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
+  vpc_security_group_ids = [
+    aws_security_group.rds.id
+  ]
 }
