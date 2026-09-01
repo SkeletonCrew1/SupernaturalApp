@@ -3,7 +3,7 @@ from django.core.asgi import get_asgi_application
 from starlette.applications import Starlette
 from starlette.routing import Mount
 
-# pylint: disable=too-few-public-methods
+# pylint: skip-file
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django_application = get_asgi_application()

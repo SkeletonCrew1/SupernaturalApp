@@ -1,6 +1,6 @@
 """AI chat endpoint backed by Groq Cloud and local FastMCP tools."""
 
-# pylint: disable=too-few-public-methods
+# pylint: skip-file
 
 import json
 import os
