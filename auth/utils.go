@@ -31,7 +31,7 @@ func generateRandomName() string {
 
 	var nouns = []string{
 		"Fox", "Shadow", "Eagle", "Wolf", "River", "Falcon", "Bear", "Lion", "Hawk", "Knight",
-		"Tiger", "Panther", "Otter", "Raven", "Owl", "Lynx", "Badger", "Bison", "Stag", "Moose",
+		"Tiger", "Panther", "Otter", "Raven", "Owl", "Lynx", "Badger", "Bison", "Stag", "Mose",
 		"Phoenix", "Dragon", "Griffin", "Pegasus", "Unicorn", "Wyvern", "Hydra", "Sprite",
 		"Comet", "Meteor", "Star", "Moon", "Sun", "Aurora", "Breeze", "Storm", "Thunder", "Rain",
 		"Leaf", "Oak", "Pine", "Maple", "Cedar", "Willow", "Forest", "Meadow", "Mountain", "Valley",
