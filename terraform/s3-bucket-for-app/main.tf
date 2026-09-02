@@ -1,9 +1,9 @@
 resource "aws_s3_bucket" "app_bucket" {
-  bucket = "skeletoncrew-masonicapp-stage-images"
+  bucket = "developer-bucket-images-984546305184-eu-north-1"
 
   tags = {
     ManagedBy = "Terraform"
-    Name      = "skeletoncrew-masonicapp-stage-images"
+    Name      = "developer-bucket-images-984546305184-eu-north-1"
   }
 }
 

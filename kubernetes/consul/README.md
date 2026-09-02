@@ -18,7 +18,7 @@ Consul service mesh, that allows different containers to securely communicate wi
   - `helm repo update`
 
 - Create load balancer controller
-  - `helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=supernatural-eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set enableServiceMutatorWebhook=false` #installation of lb controller pod that automatically creates aws nlb
+  - `helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eks-cluster --set serviceAccount.create=true --set serviceAccount.name=aws-load-balancer-controller --set enableServiceMutatorWebhook=false` #installation of lb controller pod that automatically creates aws nlb
   - `kubectl get pods -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller -w` #check if pod is Ready (1/1)
 
 - Add EBS driver for storage class

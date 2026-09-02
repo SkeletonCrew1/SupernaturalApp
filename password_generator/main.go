@@ -106,8 +106,9 @@ func PasswordGenerator(passwordLength int) string {
 	for i := range password {
 		password[i] = chars[rng.Intn(len(chars))]
 	}
-
+	log.Println(string(password))
 	return string(password)
+
 }
 
 func sendPassword(password string) error {

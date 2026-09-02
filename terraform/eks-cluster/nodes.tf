@@ -31,6 +31,15 @@ resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_on
   role       = aws_iam_role.nodes.name
 }
 
+resource "aws_launch_template" "hop_limit_increaser" {
+  metadata_options {
+    http_put_response_hop_limit = 2
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 
 resource "aws_eks_node_group" "general" {
   cluster_name    = aws_eks_cluster.eks.name
@@ -50,6 +59,10 @@ resource "aws_eks_node_group" "general" {
     desired_size = 3
     max_size     = 5
     min_size     = 0
+  }
+  launch_template {
+    id      = aws_launch_template.hop_limit_increaser.id
+    version = aws_launch_template.hop_limit_increaser.latest_version
   }
 
   update_config {
