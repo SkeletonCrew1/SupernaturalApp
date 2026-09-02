@@ -15,4 +15,7 @@ dependencies = [
     "PyJWT==2.8.0",
     "apscheduler==3.11.3",
     "requests==2.32.3",
+    "uvicorn>=0.52.4",
+    "fastmcp>=2.13.3",
+    "openai>=1.0.0",
 ]

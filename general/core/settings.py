@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.blocking",
     "apps.posts",
     "apps.votes",
+    "apps.clause",
 ]
 
 MIDDLEWARE = [

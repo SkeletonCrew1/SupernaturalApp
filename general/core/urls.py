@@ -26,4 +26,5 @@ urlpatterns = [
     path("api/", include("apps.votes.urls")),
     path("api/", include("apps.blocking.urls")),
     path("api/", include("apps.authentication.urls")),
+    path("", include("apps.clause.urls")),
 ]

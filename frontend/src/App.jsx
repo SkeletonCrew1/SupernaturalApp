@@ -9,6 +9,7 @@ import NewVote from "./pages/New_vote/New_vote";
 import Admin_page from "./pages/Admin_page/Admin";
 import HallOfFame from "./pages/HallOfFame/HallOfFame";
 import EnterPassword from "./pages/EnterPassword/EnterPassword";
+import AIChat from "./pages/AIChat/AIChat";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -157,6 +158,14 @@ export default function App() {
           element={
             <ProtectedRoute user={user}>
               <NotFound />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute user={user}>
+              <AIChat user={user} />
             </ProtectedRoute>
           }
         />

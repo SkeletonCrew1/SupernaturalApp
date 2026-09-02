@@ -38,6 +38,33 @@
   font-size: 14px;
 }
 
+.map-view__chat-btn {
+  position: absolute;
+  top: 20px;
+  right: 72px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 12px 18px;
+  color: #f3f4f6;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 30%);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.map-view__chat-btn:focus-visible {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 2px;
+}
+
 .map-view__votes-btn:hover {
   background: #1f2937;
 }
@@ -94,5 +121,15 @@
   .map-view__logo {
     top: 12px;
     left: 16px;
+  }
+
+  .map-view__chat-btn {
+    top: 64px;
+    right: 12px;
+  }
+
+  .map-view__votes-btn {
+    top: 12px;
+    right: 12px;
   }
 }
