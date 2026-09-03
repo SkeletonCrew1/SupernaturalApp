@@ -102,7 +102,7 @@ user: {message}
     )
 
     transport = SSETransport(
-        "http://general-service:4040/mcp/sse",
+        "http://127.0.0.1:4040/mcp/sse",
         headers={"Cookie": f"jwt={jwt_cookie}"},
     )
 
