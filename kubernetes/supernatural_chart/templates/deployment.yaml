@@ -107,6 +107,11 @@ spec:
                 secretKeyRef:
                   name: app-aws-secrets-map
                   key: SECRET_KEY
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: GROQ_API_KEY
           volumeMounts:
           - name: secrets-volume
             mountPath: "/mnt/secrets"

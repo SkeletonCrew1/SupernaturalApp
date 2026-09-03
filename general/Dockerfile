@@ -52,4 +52,4 @@ COPY . .
 EXPOSE 4040
 
 # Run Gunicorn as the production WSGI server.
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:4040"]
+CMD ["sh", "-c", "python manage.py migrate && exec gunicorn core.wsgi:application --bind 0.0.0.0:4040"]
