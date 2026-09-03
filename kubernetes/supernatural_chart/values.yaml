@@ -92,7 +92,7 @@ services:
     name: general
     isPartOfConsul: true
     serviceAccountName: general #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/general:test_general_v.18
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/general:test_general_v.19
     containerPort: 4040 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars
