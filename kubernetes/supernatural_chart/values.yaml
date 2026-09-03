@@ -13,7 +13,7 @@ services:
     name: cleanup
     isPartOfConsul: true
     serviceAccountName: cleanup #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/cleanup:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/cleanup:dev_cleanup_v.11
     containerPort: 8585 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars
@@ -30,7 +30,7 @@ services:
     isPartOfConsul: true
 
     serviceAccountName: auth #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/auth:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/auth:dev_auth_v.11
     containerPort: 8080 #used for container port and liveness port
     getCheck: true
 
@@ -57,7 +57,7 @@ services:
     name: mail
     isPartOfConsul: true
     serviceAccountName: mail-service #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/mail:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/mail_sending:dev_mail_sending_v.11
     containerPort: 8074 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars
@@ -74,7 +74,7 @@ services:
     name: frontend
     isPartOfConsul: true
     serviceAccountName: frontend #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/frontend:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/frontend:dev_frontend_v.11
     containerPort: 8080 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars
@@ -92,7 +92,7 @@ services:
     name: general
     isPartOfConsul: true
     serviceAccountName: general #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/general:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/general:test_general_v.14
     containerPort: 4040 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars
@@ -112,7 +112,7 @@ services:
     name: password-generator
     isPartOfConsul: true
     serviceAccountName: password-protection #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/masonic/password:latest
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/password_generator:dev_password_generator_v.11
     schedule: "5 22 * * *"
     containerPort: 9999
     #secret vars
