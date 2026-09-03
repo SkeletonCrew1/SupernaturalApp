@@ -52,5 +52,5 @@ COPY . .
 EXPOSE 4040
 
 # Run Gunicorn as the production WSGI server.
-#CMD ["sh", "-c", "python manage.py migrate && exec gunicorn core.asgi:application --bind 0.0.0.0:4040"]
-CMD ["sh", "-c", "python manage.py migrate && exec uvicorn core.wsgi:application --bind 0.0.0.0 --port 4040"]
+#CMD ["sh", "-c", "python manage.py migrate && exec gunicorn core.wsgi:application --bind 0.0.0.0:4040"]
+CMD ["sh", "-c", "python manage.py migrate && exec uvicorn core.asgi:application --bind 0.0.0.0 --port 4040"]
