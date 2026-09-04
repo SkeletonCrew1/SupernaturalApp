@@ -111,11 +111,11 @@ spec:
                 secretKeyRef:
                   name: app-aws-secrets-map
                   key: GROQ_API_KEY
-            - name: CARTO_API_KEY
+            - name: VITE_CARTO_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: app-aws-secrets-map
-                  key: CARTO_API_KEY
+                  key: VITE_CARTO_API_KEY
           volumeMounts:
           - name: secrets-volume
             mountPath: "/mnt/secrets"
