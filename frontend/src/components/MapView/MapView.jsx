@@ -5,7 +5,10 @@ import { ClickHandler, CustomZoomControls } from "../MapControls/MapControls";
 import "leaflet/dist/leaflet.css";
 import "./MapView.css";
 import logo from "../../assets/images/logo.png";
-
+const worldBounds = [
+  [-90, -180],
+  [90, 180]
+];
 export default function MapView({ onMapClick, posts = [], onMarkerClick, user }) {
   return (
     <div className="map-view">
@@ -18,6 +21,9 @@ export default function MapView({ onMapClick, posts = [], onMarkerClick, user })
         scrollWheelZoom
         zoomControl={false}
         className="map-view__map"
+        maxBounds={worldBounds}
+        maxBoundsViscosity={1.0}
+        minZoom={3}
       >
         <TileLayer url={MAP_TILE_URL} />
         <CustomZoomControls />
