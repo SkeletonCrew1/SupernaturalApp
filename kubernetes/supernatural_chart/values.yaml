@@ -74,7 +74,7 @@ services:
     name: frontend
     isPartOfConsul: true
     serviceAccountName: frontend #for mail it's mail-service
-    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/frontend:dev_frontend_v.11
+    image: 984546305184.dkr.ecr.eu-north-1.amazonaws.com/frontend:test_frontend_v.27
     containerPort: 8080 #used for container port and liveness port
     getCheck: true
     #horizontal_auto_scaling vars

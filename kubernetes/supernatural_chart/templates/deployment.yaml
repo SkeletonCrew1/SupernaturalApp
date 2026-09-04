@@ -34,7 +34,6 @@ spec:
           ports:
             - containerPort: {{ .containerPort }}
           {{- end }}
-          {{- if ne .name "frontend" }}
           env:
           {{- if eq .name "general" }}
             - name: POD_IP
@@ -112,11 +111,15 @@ spec:
                 secretKeyRef:
                   name: app-aws-secrets-map
                   key: GROQ_API_KEY
+            - name: VITE_CARTO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-aws-secrets-map
+                  key: VITE_CARTO_API_KEY
           volumeMounts:
           - name: secrets-volume
             mountPath: "/mnt/secrets"
             readOnly: true
-          {{- end }}
           resources:
             requests:
              cpu: "150m"
@@ -138,7 +141,6 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 15
           {{- end }}
-      {{- if ne .name "frontend" }}
       volumes:
         - name: secrets-volume
           csi:
@@ -146,6 +148,5 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: "aws-secrets-all"
-      {{- end }}
 {{- end }}
 {{- end }}
