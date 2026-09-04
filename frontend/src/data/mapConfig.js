@@ -1,9 +1,9 @@
 import L from "leaflet";
 
-const CARTO_API_KEY = import.meta.env.CARTO_API_KEY;
+const VITE_CARTO_API_KEY = import.meta.env.CARTO_API_KEY;
 export const DEFAULT_CENTER = [49.8397, 24.0297];
 export const DEFAULT_ZOOM = 4;
-export const MAP_TILE_URL = `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(CARTO_API_KEY)}`;
+export const MAP_TILE_URL = `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(VITE_CARTO_API_KEY)}`;
 
 export const VioletIcon = new L.Icon({
     iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
