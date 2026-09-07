@@ -1,6 +1,14 @@
 global:
+
+
   name: consul
   datacenter: dc1
+
+  installK8sNetworkingCRDs: true
+  crds:
+    enableTcpRoute: true
+    consulapi:
+      enabled: false
   # Enable gossip encryption
   gossipEncryption:
     secretName: consul-gossip-encryption-key
@@ -69,7 +77,7 @@ connectInject:
   apiGateway:
     enabled: true
   # Configuration settings for the GatewayClass
-    manageExternalCRDs: false
+    manageExternalCRDs: true
     managedGatewayClass:
       # Defines the type of service created for gateways (e.g. LoadBalancer, ClusterIP, NodePort)
       # LoadBalancer is primarily used for cloud deployments.
