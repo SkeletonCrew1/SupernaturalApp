@@ -92,9 +92,8 @@ pipeline {
                     --sync-option ServerSideApply=true \
                     --project default \
                     --upsert
-                    argocd app sync consul
+                    argocd app sync consul --prune
                     argocd app wait consul \
-                    --sync \
                     --health \
                     --timeout 900
                 '''

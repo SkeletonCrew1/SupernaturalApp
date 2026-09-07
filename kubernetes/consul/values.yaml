@@ -3,6 +3,8 @@ global:
 
   name: consul
   datacenter: dc1
+  argocd:
+    enabled: true
 
   installK8sNetworkingCRDs: true
   crds:
