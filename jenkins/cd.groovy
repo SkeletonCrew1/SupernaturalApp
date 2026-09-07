@@ -30,22 +30,23 @@ pipeline {
         stage("Create application inside ArgoCD if does not exist already"){
             steps{
                 sh '''
-                    argocd app create masonic \
-                    --repo https://github.com/SkeletonCrew1/MasonicApp.git \
-                    --path k8s/masonic-chart/masonic \
+                    argocd app create supernatural \
+                    --repo https://github.com/SkeletonCrew1/SupernaturalApp \
+                    --path kubernetes/supernatural_chart \
                     --dest-server https://kubernetes.default.svc \
-                    --dest-namespace application \
+                    --dest-namespace app \
+                    --sync-option CreateNamespace=true \
                     --revision main \
-                    --values values-stage.yaml \
+                    --values values.yaml \
                     --project default \
                     --upsert
                 '''
             }
         }
 
-        stage("Synchronize Masonic Application"){
+        stage("Synchronize Supernatural Application"){
             steps{
-                sh "argocd app sync masonic"
+                sh "argocd app sync supernatural"
             }
         }
 
