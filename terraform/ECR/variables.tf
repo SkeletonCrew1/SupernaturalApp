@@ -14,6 +14,10 @@ variable "ecr_services" {
     "auth",
     "cleanup",
     "mail_sending",
-    "password_generator"
+    "password_generator",
+    "identity",
+    "trip",
+    "chat",
+    "web"
   ]
 }
