@@ -73,3 +73,28 @@ resource "aws_db_instance" "rds_postgres" {
     aws_security_group.rds.id
   ]
 }
+
+resource "aws_db_instance" "togethergo_postgres" {
+  identifier     = "togethergo-${local.env}"
+  engine         = var.engine
+  engine_version = var.engine_version
+
+  instance_class      = var.instance_type
+  allocated_storage   = var.allocated_storage
+  storage_type        = var.storage_type
+  publicly_accessible = false
+
+  db_name                     = "togethergo"
+  username                    = "togethergo_admin"
+  manage_master_user_password = true
+
+  db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
+  parameter_group_name = aws_db_parameter_group.rds_postgres_group.name
+  vpc_security_group_ids = [
+    aws_security_group.rds.id
+  ]
+
+  storage_encrypted       = true
+  backup_retention_period = 0
+  skip_final_snapshot     = true
+}
