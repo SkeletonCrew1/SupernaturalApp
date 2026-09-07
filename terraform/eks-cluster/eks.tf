@@ -68,8 +68,21 @@ module "frontend-pod-role" {
 
   inline_policies = {
     policy = jsonencode({
+
       "Version" : "2012-10-17",
       "Statement" : [
+        {
+          "Sid" : "SecretManagerRead",
+          "Effect" : "Allow",
+          "Action" : [
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:BatchGetSecretValue"
+          ],
+          "Resource" : [
+            "*"
+          ]
+        },
         {
           "Sid" : "S3",
           "Effect" : "Allow",
@@ -83,6 +96,7 @@ module "frontend-pod-role" {
           ]
         }
       ]
+
     })
   }
 }

@@ -1,0 +1,3 @@
+window.RUNTIME_CONFIG = {
+  VITE_CARTO_API_KEY: "${VITE_CARTO_API_KEY}"
+};
