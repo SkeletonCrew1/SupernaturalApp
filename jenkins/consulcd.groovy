@@ -113,7 +113,6 @@ pipeline {
                     argocd app sync api-gateway-route
                     argocd app wait api-gateway-route \
                     --sync \
-                    --health \
                     --timeout 300
                 '''
             }
@@ -132,7 +131,6 @@ pipeline {
                     argocd app sync consul-intentions
                     argocd app wait consul-intentions \
                     --sync \
-                    --health \
                     --timeout 300
                 '''
             }
