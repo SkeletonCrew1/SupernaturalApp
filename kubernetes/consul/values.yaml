@@ -1,10 +1,19 @@
 global:
+
+
   name: consul
   datacenter: dc1
+  argocd:
+    enabled: true
+
+  installK8sNetworkingCRDs: true
+  crds:
+    enableTcpRoute: true
+    consulapi:
+      enabled: false
   # Enable gossip encryption
   gossipEncryption:
-    secretName: consul-gossip-encryption-key
-    secretKey: key
+    autoGenerate: true
   # Enable TLS
   tls:
     enabled: true
@@ -69,7 +78,7 @@ connectInject:
   apiGateway:
     enabled: true
   # Configuration settings for the GatewayClass
-    manageExternalCRDs: false
+    manageExternalCRDs: true
     managedGatewayClass:
       # Defines the type of service created for gateways (e.g. LoadBalancer, ClusterIP, NodePort)
       # LoadBalancer is primarily used for cloud deployments.
@@ -101,6 +110,4 @@ ui:
   service:
     type: ClusterIP
   ingress:
-    enabled: true
-    hosts:
-      - host: consul.example.com
+    enabled: false
