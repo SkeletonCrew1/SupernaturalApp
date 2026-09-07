@@ -11,8 +11,7 @@ global:
       enabled: false
   # Enable gossip encryption
   gossipEncryption:
-    secretName: consul-gossip-encryption-key
-    secretKey: key
+    autoGenerate: true
   # Enable TLS
   tls:
     enabled: true
@@ -109,6 +108,4 @@ ui:
   service:
     type: ClusterIP
   ingress:
-    enabled: true
-    hosts:
-      - host: consul.example.com
+    enabled: false

@@ -40,15 +40,16 @@ pipeline {
                     --helm-set serviceAccount.create=true \
                     --helm-set-string serviceAccount.name=aws-load-balancer-controller \
                     --helm-set enableServiceMutatorWebhook=false \
+                    --helm-set enableCertManager=true \
                     --project default \
                     --upsert
 
                     argocd app sync aws-load-balancer-controller
 
                     argocd app wait aws-load-balancer-controller \
-                    --sync \
+                    --resource apps:Deployment:aws-load-balancer-controller \
                     --health \
-                    --timeout 600
+                    --timeout 300
                 '''
             }
         }
@@ -57,36 +58,90 @@ pipeline {
                 sh '''
                     argocd app create consul-prerequisite \
                     --repo https://github.com/SkeletonCrew1/SupernaturalApp \
-                    --path kubernetes/consul-prerequisite \
+                    --path kubernetes/consul-prerequisite/storage \
                     --dest-server https://kubernetes.default.svc \
                     --dest-namespace consul \
                     --revision main \
                     --project default \
                     --upsert
                     argocd app sync consul-prerequisite
+                    argocd app wait consul-prerequisite \
+                    --sync \
+                    --health \
+                    --timeout 300
                 '''
             }
         }
-        stage("Deploy API CRD for consul") {
+        stage("Checkout Repository") {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/SkeletonCrew1/SupernaturalApp'
+            }
+        }
+        stage("Deploy consul chart") {
             steps {
                 sh '''
-                    argocd app create api-crd \
-                    --repo https://github.com/kubernetes-sigs/ \
-                    --path gateway-api/releases/download/v1.1.0/ \
+                    argocd app create consul \
+                    --repo https://helm.releases.hashicorp.com \
+                    --helm-chart consul \
+                    --revision 2.0.2 \
+                    --values-literal-file kubernetes/consul/values.yaml \
                     --dest-server https://kubernetes.default.svc \
-                    --dest-namespace default \
+                    --dest-namespace consul \
+                    --sync-option CreateNamespace=true \
+                    --sync-option ServerSideApply=true \
+                    --project default \
+                    --upsert
+                    argocd app sync consul
+                    argocd app wait consul \
+                    --sync \
+                    --health \
+                    --timeout 900
+                '''
+            }
+        }
+        stage("Deploy API gateway and frontend route for consul") {
+            steps {
+                sh '''
+                    argocd app create api-gateway-route \
+                    --repo https://github.com/SkeletonCrew1/SupernaturalApp \
+                    --path kubernetes/consul/templates/getaway \
+                    --dest-server https://kubernetes.default.svc \
+                    --dest-namespace consul \
                     --revision main \
                     --project default \
                     --upsert
-                    argocd app sync api-crd
+                    argocd app sync api-gateway-route
+                    argocd app wait api-gateway-route \
+                    --sync \
+                    --health \
+                    --timeout 300
                 '''
             }
         }
-        stage("Cleanup Workspace"){
+        stage("Deploy intentions and serviceDefaults for consul") {
             steps {
-                cleanWs()
+                sh '''
+                    argocd app create consul-intentions \
+                    --repo https://github.com/SkeletonCrew1/SupernaturalApp \
+                    --path kubernetes/consul/templates/intentions \
+                    --dest-server https://kubernetes.default.svc \
+                    --dest-namespace consul \
+                    --revision main \
+                    --project default \
+                    --upsert
+                    argocd app sync consul-intentions
+                    argocd app wait consul-intentions \
+                    --sync \
+                    --health \
+                    --timeout 300
+                '''
             }
         }
-
+    }
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
