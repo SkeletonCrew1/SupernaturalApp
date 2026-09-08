@@ -44,7 +44,13 @@ pipeline {
         }
         stage("Synchronize clusterissuer"){
             steps{
-                sh "argocd app sync https"
+                sh '''
+                    argocd app sync https
+                    argocd app wait https \
+                    --sync \
+                    --health \
+                    --timeout 600
+                '''
             }
         }
 
