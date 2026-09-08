@@ -4,6 +4,8 @@ kind: Gateway
 metadata:
   name: api-gateway
   namespace: consul
+  labels:
+    component: api-gateway
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
