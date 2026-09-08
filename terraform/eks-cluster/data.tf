@@ -16,3 +16,9 @@ data "aws_secretsmanager_secret" "DB_NAMING" {
 data "aws_secretsmanager_secret_version" "DB_NAME" {
   secret_id = data.aws_secretsmanager_secret.DB_NAMING.id
 }
+data "aws_secretsmanager_secret" "CLOUDFLARE" {
+  name = "CLOUDFLARE_API_KEY"
+}
+data "aws_secretsmanager_secret_version" "CLOUDFLARE_API_KEY" {
+  secret_id = data.aws_secretsmanager_secret.CLOUDFLARE.id
+}

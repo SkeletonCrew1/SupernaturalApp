@@ -84,7 +84,7 @@ pipeline {
                     argocd app create consul \
                     --repo https://helm.releases.hashicorp.com \
                     --helm-chart consul \
-                    --revision 2.0.2 \
+                    --revision 2.0.3 \
                     --values-literal-file kubernetes/consul/values.yaml \
                     --dest-server https://kubernetes.default.svc \
                     --dest-namespace consul \
