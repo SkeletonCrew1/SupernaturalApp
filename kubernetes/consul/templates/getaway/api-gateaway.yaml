@@ -23,14 +23,14 @@ spec:
 #    allowedRoutes:
 #      namespaces:
 #        from: All
-  - protocol: HTTPS
-    port: 443
-    name: https
-    hostname: "www.supernatural.pp.ua"
-    tls:
-      mode: Terminate
-      certificateRefs:
-         - name: supernatural-tls
-    allowedRoutes:
-      namespaces:
-        from: All
+    - protocol: HTTPS
+      port: 443
+      name: https
+      hostname: "www.supernatural.pp.ua"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: supernatural-tls
+      allowedRoutes:
+        namespaces:
+          from: All
