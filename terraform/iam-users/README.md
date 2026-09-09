@@ -3,9 +3,10 @@
 This documentation describes how to create IAM users for teammates using Terraform code in AWS.
 
 ## Preriqusites
-- Git
-- Terraform
+- [Git](https://git-scm.com/install/) v2.53.0
 - AWS account
+- [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) v2.31.35
+- [Terraform](https://developer.hashicorp.com/terraform/install) v1.15.8
 
 ## Folder structure
 - `provider.tf` defines the cloud provider and S3 backend.
@@ -21,13 +22,10 @@ This documentation describes how to create IAM users for teammates using Terrafo
 # 1. Configure AWS credentials in the terminal.
 
 # 2. Clone the MasonicApp repository.
-git clone https://github.com/SkeletonCrew1/MasonicApp.git
-
-# Change the branch.
-git checkout SKEL-2-68-create-iam-users
+git clone https://github.com/SkeletonCrew1/SupernaturalApp.git
 
 # Change working directory.
-cd MasonicApp/terraform/s3-bucket-for-state
+cd ./terraform/s3-bucket-for-state
 
 # Initialize the working directory for Terraform.
 terraform init
@@ -36,7 +34,7 @@ terraform init
 terraform apply
 
 # Change working directory.
-cd MasonicApp/terraform/iam-users
+cd ./terraform/iam-users
 
 # Initialize the working directory for Terraform.
 terraform init

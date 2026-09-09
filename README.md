@@ -16,6 +16,9 @@ This repository contains secure social network application that consists of seve
 * Architect and Architect hall of fame
 * Architects can promote and demote any user without voting and are changed every 7 days
 * Architect is chosen if majority of users vote YES(90%)
+* MCP powered by Groq AI
+
+## Services
 
 ```text
 .
@@ -33,43 +36,34 @@ This repository contains secure social network application that consists of seve
 
 ## Prerequisites
 
-* [Docker](https://docs.docker.com/desktop/) v29.6.2
+* [Terraform](https://developer.hashicorp.com/terraform/install) v1.15.9
 * [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) v2.31.35
 * [kubernetes](https://kubernetes.io/docs/tasks/tools/):
   1. Client v1.36.3
   1. Kustomize v5.8.1
   1. Server v.1.36.2
-* [Helm](https://helm.sh/docs/intro/install/) v4.2.3
 * Cloudflare API key with Zone edit permissions
 * Your Domain with configured cloudflare name servers
 
 ## Steps to Run
 
 1. Configure AWS credentials `aws config`
-1. Deploy VPC, EKS, Consul and RDS from our other repo [SupernaturalIaC](https://github.com/CommandLine-5336/SupernaturalIaC)
-1. Configure kubectl to work with your EKS cluster `aws eks update-kubeconfig --region <region-code> --name  <my-cluster>`
-1. Add necessary addons like metrics server and cert-bot for certification
-    ```bash
-    helm install \
-      cert-manager oci://quay.io/jetstack/charts/cert-manager \
-      --version v1.21.1 \
-      --namespace cert-manager \
-      --create-namespace \
-      --set crds.enabled=true
-    helm upgrade --install cert-manager oci://quay.io/jetstack/charts/cert-manager --namespace cert-manager \
-      --set config.gatewayAPI.enabled=true
-    ```
-    ```bash
-    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
-    ```
-1. Add neecessary values and secrets to kubernetes/supernatural_chart/Values.yaml
-1. Run `helm install supernatural ./kubernetes/supernatural_chart/values.yaml`
-1. Configure your domains DNS records to point at your NLB
-1. To get TLS certification add your cloudflare api key:
-    ```bash
-    kubectl create secret generic cloudflare-api-token-secret \
-    --from-literal=api-token=<YOUR_NEW_TOKEN> \
-    -n cert-manager
-    ```
-1. Run `kubectl apply ./kubernetes/certification.yaml`
+1. Deploy terraform resources:
+    1. Deploy [iam-users](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/terraform/iam-users)
+    1. Deploy [s3-bucket-for-state](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/terraform/s3-bucket-for-state)
+    1. Deploy [s3-bucket-for-app](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/terraform/s3-bucket-for-app)
+    1. Deploy [ECR](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/terraform/ECR)
+        * Configure Github Actions secret and run push to ecr workflow (**1st time only**)
+    1. Deploy [EKS/VPC/RDS](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/terraform/eks-cluster)
+1. Configure kubectl to work with your EKS cluster
+```bash
+    aws eks update-kubeconfig --region <region-code> --name  <my-cluster>
+    aws sts assume-role --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin --role-session-name session
+    aws eks update-kubeconfig --region eu-north-1 --name eks-cluster --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin
+```
+1. Add necessary Secrets to secret manager
+(Reference [secrets.example](https://github.com/SkeletonCrew1/SupernaturalApp/blob/docs/main/secrets.example))
+1. Follow [jenkins](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/jenkins) folder instructions to
+build the app/consul
+1. Configure your domains DNS records to point at NLB created by consul api-gateway
 1. Go to your domain and enjoy!
