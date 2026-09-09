@@ -1,10 +1,19 @@
 # What is?
-This folder is for storing our Jenkins CD pipelines. Currently only one pipeline is available:
-* cd.groovy is a CD pipeline to deploy or update our masonic application, ingress and  to our EKS cluster.
+This folder is for storing our Jenkins CD pipelines. Pipelines in this folder are:
+1. [cd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/cd.groovy) is a CD pipeline to deploy or update our Supernatural applicationto our EKS cluster.
+1. [cddelete.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/cddelete.groovy) is a pipeline for tearing down
+the application
+1. [consulcd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/consulcd.groovy) is a pipeline for deploying and configuring
+consul service mesh
+1. [httpscd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/httpscd.groovy) is a pipeline that configures ClusterIssuer and a certificate for consul NLB
 
 ## How to run?
+1. Deploy EKS cluster and connect to it.
 1. Expose Jenkins server using `kubectl --namespace jenkins port-forward svc/jenkins 8080:8080`.
-2. Log into Jenkins.
-3. Go to settings, add a security credential with type of secret text, called `argocd-admin-password` with actual ArgoCD password (get it from AWS Secrets Manager).
-4. Create a new job of pipeline type and add code from `jenkins/cd.groovy`.
-5. Run the job and wait for 2-3 minutes until Load Balancer is fully provisioned.
+1. Log into Jenkins.
+1. Go to settings, add a security credential with type of secret text, called `argocd-admin-password` with actual ArgoCD password (get it from AWS Secrets Manager).
+1. Create a 4 pipelines from `*.groovy` files.
+1. Run jobs in following order:
+    1. [httpscd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/httpscd.groovy)
+    1. [consulcd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/consulcd.groovy)
+    1. [cd.groovy](https://github.com/SkeletonCrew1/SupernaturalApp/blob/main/jenkins/cd.groovy)

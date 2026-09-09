@@ -4,9 +4,10 @@ This documentation describes how to create an EKS cluster and manage policies us
 
 ## Preriqusites
 
-- Git installed
+- [Git](https://git-scm.com/install/) v2.53.0
 - AWS account
-- Terraform installed
+- [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) v2.31.35
+- [Terraform](https://developer.hashicorp.com/terraform/install) v1.15.9
 
 ## Folder structure
 - `provider.tf` defines the cloud provider and backend.
@@ -24,17 +25,18 @@ This documentation describes how to create an EKS cluster and manage policies us
 - `monitoring.tf` sets up Prometheus and Grafana monitoring stack and pushes Grafana password to AWS Secrets Manager.
 - `argocd.tf` sets up ArgoCD for our EKS cluster and pushes ArgoCD password to AWS Secrets Manager.
 - `jenkins.tf` sets up Jenkins for our EKS cluster and pushes Jenkins to AWS Secrets Manager.
+- `data.tf` contains necessary data type resources
+- `https_secret.tf` contains secret necessary for configuring TLS
 
 ## Usage
 
 ```bash
-1. Configure AWS credentials
-2. Clone the MasonicApp repository
-3. Change branch to SKEL2-49-implementation-eks-cluster
-4. Change working directory to MasonicApp/terraform/eks-cluster/
-5. Run terraform init
-6. Run terraform apply
-7. Run the following commands and paste the AWS user ID there.
+1. Configure AWS credentials `aws config`
+1. Clone the SupernaturalApp repository
+1. Change working directory to MasonicApp/terraform/eks-cluster/
+1. Run terraform init
+1. Run terraform apply
+1. Run the following commands and paste the AWS user ID there.
 aws eks update-kubeconfig --region eu-north-1 --name eks-cluster
 aws sts assume-role --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin --role-session-name session
 aws eks update-kubeconfig --region eu-north-1 --name eks-cluster --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin
@@ -42,20 +44,16 @@ aws eks update-kubeconfig --region eu-north-1 --name eks-cluster --role-arn arn:
 
 ## Additional
 Jenkins, ArgoCD and Grafana passwords are stored in AWS Secrets Manager.
-To expose Grafana use: `kubectl port-forward svc/grafana -n monitoring 3000:80`
-To expose ArgoCD use: `kubectl port-forward svc/argocd-server -n argocd 443:443`
-To expose Jenkins use: `kubectl --namespace jenkins port-forward svc/jenkins 8080:8080`
+To expose Grafana use: `kubectl port-forward svc/grafana -n monitoring <Your-port>:80`
+To expose ArgoCD use: `kubectl port-forward svc/argocd-server -n argocd <Your-port>:443`
+To expose Jenkins use: `kubectl --namespace jenkins port-forward svc/jenkins <Your-port>:8080`
 
 To start our application:
-1. Expose Jenkins server.
-2. Log into Jenkins.
-3. Go to settings, add a security credential with type of secret text, called `argocd-admin-password` with actual ArgoCD password (get from AWS Secrets Manager).
-4. Create a new job of pipeline type and add code from `jenkins/cd.groovy`.
-5. Run the job and wait for 2-3 minutes until Load Balancer is fully provisioned.
+1. Follow the [jenkins](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/jenkins) folder instructions.
 
 To delete our application:
 1. Expose ArgoCD server.
-2. Log into ArgoCD.
-3. Find application, press on delete, confirm and wait for deletion.
+1. Log into ArgoCD.
+1. Find application, press on delete, confirm and wait for deletion.
 
-! Important note: before killing clustrer with `terraform apply`, kill application first using ArgoCD.
+### Important note: before killing clustrer with `terraform destroy`, kill application first using ArgoCD.
