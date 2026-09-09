@@ -56,4 +56,4 @@ To delete our application:
 1. Log into ArgoCD.
 1. Find application, press on delete, confirm and wait for deletion.
 
-### Important note: before killing clustrer with `terraform destroy`, kill application first using ArgoCD.
+### Important note: before killing clustrer with `terraform destroy`, kill application first using ArgoCD
