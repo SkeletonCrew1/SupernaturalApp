@@ -61,7 +61,8 @@ This repository contains secure social network application that consists of seve
     aws sts assume-role --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin --role-session-name session
     aws eks update-kubeconfig --region eu-north-1 --name eks-cluster --role-arn arn:aws:iam::<ACCOUNT-ID>:role/eks-admin
 ```
-1. Add necessary Secrets to secret manager (Reference secrets.example)
+1. Add necessary Secrets to secret manager
+(Reference [secrets.example](https://github.com/SkeletonCrew1/SupernaturalApp/blob/docs/main/secrets.example))
 1. Follow [jenkins](https://github.com/SkeletonCrew1/SupernaturalApp/tree/main/jenkins) folder instructions to
 build the app/consul
 1. Configure your domains DNS records to point at NLB created by consul api-gateway
